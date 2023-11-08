@@ -55,7 +55,7 @@ const validateApiKey = (request: Req, apiKeyList: Array<string>): boolean => {
 };
 
 // Validate login
-// TODO: Right now, this does not utilize a database or Node crypto, but just implements basic (and NOT SECURE) validation logic. Update in the future.
+// TODO: Right now, this does not utilize Node crypto, but just implements basic (and NOT SECURE) validation logic. Update in the future.
 // Returns user if username or password match user in users array.
 // Returns null if no matched user is found and by default.
 const getUserFromCredentials = (

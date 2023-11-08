@@ -27,15 +27,27 @@ var getCorsHeaders = function () {
 // Takes request object and array of valid API key strings as arguments
 // Returns true if API key is present in 'x-authentication' header and false if not
 var validateApiKey = function (request, apiKeyList) {
-    if (apiKeyList.includes(request.headers['x-authentication'])) {
+    if (apiKeyList.includes(request.headers["x-authentication"])) {
         return true;
     }
     return false;
 };
-var testRequest = {
-    headers: {
-        'x-authentication': '1t3'
+// Validate login
+// TODO: Right now, this does not utilize a database or Node crypto, but just implements basic (and NOT SECURE) validation logic. Update in the future.
+// Returns user if username or password match user in users array.
+// Returns null if no matched user is found and by default.
+var getUserFromCredentials = function (request, usersList) {
+    var username = request.body.username;
+    var password = request.body.password;
+    if (!username || !password) {
+        return null;
     }
+    var matchedUser = usersList.find(function (user) { return user.login.username === username; });
+    if (!matchedUser) {
+        return null;
+    }
+    if (matchedUser.login.password === password) {
+        return matchedUser;
+    }
+    return null;
 };
-var testApiKeyList = ['123', 'abc'];
-console.log(validateApiKey(testRequest, testApiKeyList));
